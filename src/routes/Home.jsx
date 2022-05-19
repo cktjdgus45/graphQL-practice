@@ -18,31 +18,31 @@ const GET_MOVIES = gql`
 const Container = styled.div`
   display : flex;
   flex-direction:column;
-  width:100vw;
-  height:100vh;
+  align-items: center;
+  width:100%;
 `;
 const Header = styled.header`
-  padding: 4em;
   display : flex;
+  width:100%;
+  height: 45vh;
   flex-direction:column;
   justify-content : center;
   align-items : center;
-  background-color:#92B4EC;
+  background-image: linear-gradient(-45deg, #d754ab, #fd723a);
+  color:#FFFFFF;
 `;
 
 const Title = styled.h1`
-  font-size: 2.5em;
-  text-align: center;
-  color: #FFFFFF;
-  font-weight:bold;
-  margin-bottom:10px;
+font-size: 60px;
+font-weight: 600;
+margin-bottom: 20px;
 `;
 
 const Subtitle = styled.h3`
-  font-size: 1.5em;
-  text-align: center;
-  color: #FFFFFF;
-  font-weight:light;
+font-size: 18px;
+opacity: 0.5;
+font-weight: 500;
+margin-top: 10px;
 `;
 
 const Loading = styled.h1`
@@ -54,11 +54,16 @@ const Loading = styled.h1`
   font-weight:bold;
   color:#82A284;
 `
-const Main = styled.main`
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-`
+
+const Movies = styled.div`
+  display:grid;
+  justify-content:center;
+  grid-template-columns:repeat(4,1fr);
+  grid-gap:25px;
+  width:60%;
+  position:relative;
+  top:-60px;
+  `
 
 function Home() {
   const { loading, error, data } = useQuery(GET_MOVIES);
@@ -68,11 +73,13 @@ function Home() {
         <Title>Apollo 2022</Title>
         <Subtitle>I love GraphQL</Subtitle>
       </Header>
-      <Main>
-        {error && <p>Error!</p>}
-        {loading && <Loading>Loading...</Loading>}
-        {!loading && data.movies.map(movie => <Movie key={movie.id} id={movie.id} />)}
-      </Main>
+      {error && <p>Error!</p>}
+      {loading && <Loading>Loading...</Loading>}
+      {!loading && data.movies &&
+        <Movies>
+          {data.movies.map(movie => <Movie key={movie.id} id={movie.id} medium_cover_image={movie.medium_cover_image} />)}
+        </Movies>
+      }
     </Container>
   );
 }
