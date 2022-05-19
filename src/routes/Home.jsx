@@ -75,11 +75,9 @@ function Home() {
       </Header>
       {error && <p>Error!</p>}
       {loading && <Loading>Loading...</Loading>}
-      {!loading && data.movies &&
-        <Movies>
-          {data.movies.map(movie => <Movie key={movie.id} id={movie.id} medium_cover_image={movie.medium_cover_image} />)}
-        </Movies>
-      }
+      <Movies>
+        {data?.movies?.map(movie => <Movie key={movie.id} id={movie.id} medium_cover_image={movie.medium_cover_image} />)}
+      </Movies>
     </Container>
   );
 }
